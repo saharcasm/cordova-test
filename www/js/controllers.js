@@ -1,20 +1,23 @@
 angular.module('starter.controllers', [])
 
   .controller('DashCtrl', function($scope, $timeout, ImagesFactory, EmailFactory) {
+    var imageUrls=[];
+
+
+    // ImagesFactory.takePhoto().then(function (response) {
+    //imageUrls.push(response)
+    // })
+
+
     $scope.saveImage=function (imageId) {
-      var imageUrls=[];
-      var doc;
-      // ImagesFactory.takePhoto().then(function (response) {
-      //imageUrls.push(response)
-      // })
-      // saveAsPdf.saveImage(imageUrls[i]);
+
+      // var doc=saveAsPdf.saveImage(imageUrls);
+      // EmailFactory.saveDoc(doc);
 
       var image=document.createElement('img');
       image.src="img/test.jpg";
       $timeout(function () {
         doc=saveAsPdf.addImage(image);
-        EmailFactory.saveDoc(doc);
-        console.log(doc);
       },100);
     };
 
