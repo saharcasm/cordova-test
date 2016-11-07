@@ -9,7 +9,6 @@
   /* @ngInject */
   function CameraFactory($q ,$cordovaCamera) {
 
-
     if (window.cordova) {
       var optionsCamera = {
         quality: 70,
@@ -37,7 +36,7 @@
         });
       }
       else {
-        alert("Need camera ???");
+        console.log("some error");
       }
       return defer.promise;
     }

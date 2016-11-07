@@ -32,16 +32,20 @@ SaveAsPdf.prototype = {
     var ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0);
     return canvas.toDataURL("image/jpeg");
-
   },
 
-  saveImage:function(image){
-    var base64 = this.getBase64(image);
-    var doc = new jsPDF();
+
+  addImage:function(images){
+    var doc=new jsPDF();
+    // for(var i in images){
+    //   doc.addImage(images[i], 'JPEG', 0, 0);
+    //   doc.addPage();
+    // }
+    var base64 = this.getBase64(images);
     doc.addImage(base64, 'JPEG', 0, 0);
     doc.addPage();
-    doc.addImage(base64, 'JPEG', 0, 0);
     doc.save("test.pdf");
+    return doc;
   }
 };
 

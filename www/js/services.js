@@ -1,36 +1,55 @@
 angular.module('starter.services', [])
 
-.factory('ImagesFactory', function($q ,$cordovaCamera) {
+  .factory('EmailFactory', function ($q) {
+    var _data={
+      doc:{}
+    };
+    var options={
 
-  if (window.cordova) {
-    var optionsCamera = {
-      quality: 70,
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA,
-      targetWidth: 800,
-      targetHeight: 800,
-      saveToPhotoAlbum: false,
-      correctOrientation: true
+    };
+    return{
+      sendEmail: sendEmail,
+      saveDoc: saveDoc
+    };
+    function sendEmail() {
+      console.log(doc);
     }
-  }
+    function saveDoc(doc) {
+      _data.doc=doc;
+    }
+  })
 
-  return {
-    takePhoto:takePhoto
-  };
+  .factory('ImagesFactory', function($q ,$cordovaCamera) {
 
-  function takePhoto() {
-    var defer = $q.defer();
     if (window.cordova) {
-      $cordovaCamera.getPicture(optionsCamera).then(function (res) {
-        defer.resolve(res);
+      var optionsCamera = {
+        quality: 70,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        targetWidth: 800,
+        targetHeight: 800,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      }
+    }
 
-      }, function (err) {
-        defer.reject(err);
-      });
+    return {
+      takePhoto:takePhoto
+    };
+
+    function takePhoto() {
+      var defer = $q.defer();
+      if (window.cordova) {
+        $cordovaCamera.getPicture(optionsCamera).then(function (res) {
+          defer.resolve(res);
+
+        }, function (err) {
+          defer.reject(err);
+        });
+      }
+      else {
+        console.log("Error");
+      }
+      return defer.promise;
     }
-    else {
-      alert("Need camera ???");
-    }
-    return defer.promise;
-  }
-});
+  });
